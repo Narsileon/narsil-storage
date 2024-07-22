@@ -1,0 +1,41 @@
+{
+	"name": "narsil/storage",
+	"description": "Narsil Storage",
+	"license": "MIT",
+	"keywords": [
+		"laravel",
+		"narsil",
+		"storage"
+	],
+	"authors": [
+		{
+			"name": "Jonathan Rigaux"
+		}
+	],
+	"require": {
+		"php": "^8.2",
+		"laravel/framework": "^11.3"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^11.0"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"Narsil\\Storage\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Narsil\\Storage\\NarsilStorageServiceProvider"
+			]
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true
+	}
+}

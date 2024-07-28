@@ -6,8 +6,8 @@ namespace Narsil\Storage\Http\Controllers;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Routing\Controller;
-use Narsil\Framework\Http\Resources\Forms\IconResource;
 use Narsil\Storage\Http\Requests\FetchRequest;
+use Narsil\Storage\Http\Resources\Forms\IconResource;
 use Narsil\Storage\Models\Icon;
 
 #endregion

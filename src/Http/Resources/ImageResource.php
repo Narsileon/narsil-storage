@@ -1,6 +1,6 @@
 <?php
 
-namespace Narsil\Framework\Http\Resources\Forms;
+namespace Narsil\Storage\Http\Resources\Forms;
 
 #region USE
 

@@ -40,7 +40,7 @@ class Icon extends Model
             self::PATH,
         ];
 
-        parent::__construct($attributes, self::TABLE);
+        parent::__construct($attributes);
     }
 
     #endregion

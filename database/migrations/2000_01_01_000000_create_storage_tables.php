@@ -56,8 +56,6 @@ return new class extends Migration
             $table->boolean(Image::ACTIVE)->default(true);
 
             $table->string(Icon::PATH);
-            $table->string(Icon::FILENAME);
-            $table->string(Icon::EXTENSION);
 
             $table->timestamps();
         });
@@ -79,8 +77,6 @@ return new class extends Migration
             $table->boolean(Image::ACTIVE)->default(true);
 
             $table->string(Image::PATH);
-            $table->string(Image::FILENAME);
-            $table->string(Image::EXTENSION);
 
             $table->timestamps();
         });

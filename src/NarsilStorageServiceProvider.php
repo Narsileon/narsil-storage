@@ -30,6 +30,7 @@ final class NarsilStorageServiceProvider extends ServiceProvider
         $this->bootBlueprints();
         $this->bootCommands();
         $this->bootMigrations();
+        $this->bootRoutes();
     }
 
     #endregion
@@ -70,6 +71,14 @@ final class NarsilStorageServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom([
             __DIR__ . '/../database/migrations',
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    private function bootRoutes(): void
+    {
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
 
     #endregion

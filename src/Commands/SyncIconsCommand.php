@@ -5,6 +5,7 @@ namespace Narsil\Storage\Commands;
 #region USE
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Narsil\Storage\Models\Icon;
@@ -33,6 +34,16 @@ final class SyncIconsCommand extends Command
 
     #endregion
 
+    #region PROPERTIES
+
+    /**
+     *
+     * @var Collection Collection of Icon keyed by path.
+     */
+    private Collection $icons;
+
+    #endregion
+
     #region PUBLIC METHODS
 
     /**
@@ -40,9 +51,10 @@ final class SyncIconsCommand extends Command
      */
     public function handle()
     {
-        $icons = $this->createMissingIcons();
+        $this->icons = Icon::all()->keyBy(Icon::PATH);
 
-        $this->deleteMissingIcons($icons);
+        $this->createMissingIcons();
+        $this->deleteMissingIcons();
 
         $this->info('Icons table has been successfully synced with the storage folder.');
     }
@@ -52,15 +64,13 @@ final class SyncIconsCommand extends Command
     #region PRIVATE METHODS
 
     /**
-     * @return array<integer>
+     * @return void
      */
-    private function createMissingIcons(): array
+    private function createMissingIcons(): void
     {
         $path = Storage::disk('public')->path('icons');
 
         $files = File::allFiles($path);
-
-        $icons = [];
 
         foreach ($files as $file)
         {
@@ -69,26 +79,39 @@ final class SyncIconsCommand extends Command
                 continue;
             }
 
-            $icon = Icon::firstOrCreate([
-                Icon::EXTENSION => $file->getExtension(),
-                Icon::FILENAME => pathinfo($file->getFilename(), PATHINFO_FILENAME),
-                Icon::PATH => $file->getRelativePathname(),
-            ]);
-
-            $icons[] = $icon->{Icon::ID};
+            $icon = $this->getIcon($file->getRelativePathname());
         }
-
-        return $icons;
     }
 
     /**
-     * @param array<integer> $icons
-     *
      * @return void
      */
-    private function deleteMissingIcons(array $icons): void
+    private function deleteMissingIcons(): void
     {
-        Icon::whereNotIn(Icon::ID, $icons)->delete();
+        $ids = $this->icons->pluck(Icon::ID);
+
+        Icon::whereNotIn(Icon::ID, $ids)->delete();
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Icon
+     */
+    private function getIcon(string $path): Icon
+    {
+        $icon = $this->icons->get($path);
+
+        if (!$icon)
+        {
+            $icon = Icon::create([
+                Icon::PATH => $path,
+            ]);
+
+            $this->icons->put($path, $icon);
+        }
+
+        return $icon;
     }
 
     #endregion

@@ -5,6 +5,7 @@ namespace Narsil\Storage\Commands;
 #region USE
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Narsil\Storage\Models\Image;
@@ -33,6 +34,16 @@ final class SyncImagesCommand extends Command
 
     #endregion
 
+    #region PROPERTIES
+
+    /**
+     *
+     * @var Collection Collection of Image keyed by path.
+     */
+    private Collection $images;
+
+    #endregion
+
     #region PUBLIC METHODS
 
     /**
@@ -40,9 +51,10 @@ final class SyncImagesCommand extends Command
      */
     public function handle()
     {
-        $images = $this->createMissingImages();
+        $this->images = Image::all()->keyBy(Image::PATH);
 
-        $this->deleteMissingImages($images);
+        $this->createMissingImages();
+        $this->deleteMissingImages();
 
         $this->info('Images table has been successfully synced with the storage folder.');
     }
@@ -52,15 +64,13 @@ final class SyncImagesCommand extends Command
     #region PRIVATE METHODS
 
     /**
-     * @return array<integer>
+     * @return void
      */
-    private function createMissingImages(): array
+    private function createMissingImages(): void
     {
         $path = Storage::disk('public')->path('images');
 
         $files = File::files($path);
-
-        $images = [];
 
         foreach ($files as $file)
         {
@@ -69,26 +79,39 @@ final class SyncImagesCommand extends Command
                 continue;
             }
 
-            $image = Image::firstOrCreate([
-                Image::EXTENSION => $file->getExtension(),
-                Image::FILENAME => pathinfo($file->getFilename(), PATHINFO_FILENAME),
-                Image::PATH => $file->getRelativePathname(),
-            ]);
-
-            $images[] = $image->{Image::ID};
-        }
-
-        return $images;
+            $image = $this->getImage($file->getRelativePathname());
+        };
     }
 
     /**
-     * @param array<integer> $images
-     *
      * @return void
      */
-    private function deleteMissingImages(array $images): void
+    private function deleteMissingImages(): void
     {
-        Image::whereNotIn(Image::ID, $images)->delete();
+        $ids = $this->images->pluck(Image::ID);
+
+        Image::whereNotIn(Image::ID, $ids)->delete();
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Image
+     */
+    private function getImage(string $path): Image
+    {
+        $image = $this->images->get($path);
+
+        if (!$image)
+        {
+            $image = Image::create([
+                Image::PATH => $path,
+            ]);
+
+            $this->images->put($path, $image);
+        }
+
+        return $image;
     }
 
     #endregion

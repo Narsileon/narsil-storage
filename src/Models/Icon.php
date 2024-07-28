@@ -26,10 +26,13 @@ class Icon extends Model
     {
         $this->table = self::TABLE;
 
+        $this->appends = [
+            self::ATTRIBUTE_EXTENSION,
+            self::ATTRIBUTE_FILENAME,
+        ];
+
         $this->fillable = [
             self::ACTIVE,
-            self::EXTENSION,
-            self::FILENAME,
             self::PATH,
         ];
 
@@ -47,14 +50,6 @@ class Icon extends Model
     /**
      * @var string
      */
-    final public const EXTENSION = 'extension';
-    /**
-     * @var string
-     */
-    final public const FILENAME = 'filename';
-    /**
-     * @var string
-     */
     final public const ID = 'id';
     /**
      * @var string
@@ -64,7 +59,36 @@ class Icon extends Model
     /**
      * @var string
      */
+    final public const ATTRIBUTE_EXTENSION = 'extension';
+    /**
+     * @var string
+     */
+    final public const ATTRIBUTE_FILENAME = 'filename';
+
+    /**
+     * @var string
+     */
     final public const TABLE = 'icons';
+
+    #endregion
+
+    #region ATTRIBUTES
+
+    /**
+     * @return string
+     */
+    public function getExtensionAttribute(): string
+    {
+        return pathinfo($this->{self::PATH}, PATHINFO_EXTENSION);
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilenameAttribute(): string
+    {
+        return pathinfo($this->{self::PATH}, PATHINFO_FILENAME);
+    }
 
     #endregion
 }

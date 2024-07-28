@@ -31,6 +31,10 @@ class Image extends Model
             self::ATTRIBUTE_FILENAME,
         ];
 
+        $this->casts = [
+            self::ACTIVE => 'boolean',
+        ];
+
         $this->fillable = [
             self::ACTIVE,
             self::PATH,

@@ -3,9 +3,12 @@
 	"description": "Narsil Storage",
 	"license": "MIT",
 	"keywords": [
+		"inertia",
 		"laravel",
 		"narsil",
-		"storage"
+		"php",
+		"storage",
+		"react"
 	],
 	"authors": [
 		{

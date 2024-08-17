@@ -30,7 +30,7 @@ class IconFetchController extends Controller
 
         $icons = Icon::query()
             ->where(Icon::ACTIVE, true)
-            ->where(Icon::PATH, "like", "%$search%")
+            ->where(Icon::PATH, 'like', "%$search%")
             ->get();
 
         return IconResource::collection($icons);

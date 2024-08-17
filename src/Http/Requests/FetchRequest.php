@@ -17,7 +17,7 @@ final class FetchRequest extends FormRequest
 {
     #region CONSTANTS
 
-    public const SEARCH = "search";
+    public const SEARCH = 'search';
 
     #endregion
 

@@ -30,7 +30,7 @@ class ImageFetchController extends Controller
 
         $images = Image::query()
             ->where(Image::ACTIVE, true)
-            ->where(Image::PATH, "like", "%$search%")
+            ->where(Image::PATH, 'like', "%$search%")
             ->get();
 
         return ImageResource::collection($images);

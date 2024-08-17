@@ -68,6 +68,11 @@ final class SyncImagesCommand extends Command
      */
     private function createMissingImages(): void
     {
+        if (!Storage::disk('public')->exists('images'))
+        {
+            Storage::disk('public')->makeDirectory('images');
+        }
+
         $path = Storage::disk('public')->path('images');
 
         $files = File::files($path);

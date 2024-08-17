@@ -68,6 +68,11 @@ final class SyncIconsCommand extends Command
      */
     private function createMissingIcons(): void
     {
+        if (!Storage::disk('public')->exists('icons'))
+        {
+            Storage::disk('public')->makeDirectory('icons');
+        }
+
         $path = Storage::disk('public')->path('icons');
 
         $files = File::allFiles($path);

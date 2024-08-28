@@ -5,6 +5,7 @@ namespace Narsil\Storage\Models;
 #region USE
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 #endregion
 
@@ -29,6 +30,7 @@ class Icon extends Model
         $this->appends = [
             self::ATTRIBUTE_EXTENSION,
             self::ATTRIBUTE_FILENAME,
+            self::ATTRIBUTE_SOURCE,
         ];
 
         $this->casts = [
@@ -68,6 +70,10 @@ class Icon extends Model
      * @var string
      */
     final public const ATTRIBUTE_FILENAME = 'filename';
+    /**
+     * @var string
+     */
+    final public const ATTRIBUTE_SOURCE = 'src';
 
     /**
      * @var string
@@ -93,6 +99,15 @@ class Icon extends Model
     {
         return pathinfo($this->{self::PATH}, PATHINFO_FILENAME);
     }
+
+    /**
+     * @return string
+     */
+    public function getSrcAttribute(): string
+    {
+        return Storage::url('icons' . '/' . $this->{self::PATH});
+    }
+
 
     #endregion
 }

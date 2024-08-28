@@ -26,7 +26,7 @@ final class SyncIconsCommand extends Command
      */
     public function __construct()
     {
-        $this->signature = 'narsil:sync-icons';
+        $this->signature = 'narsil:sync-icons {--fresh}';
         $this->description = 'Syncs the icons table with the storage folder';
 
         parent::__construct();
@@ -51,6 +51,11 @@ final class SyncIconsCommand extends Command
      */
     public function handle()
     {
+        if ($this->option('fresh'))
+        {
+            Icon::query()->delete();
+        }
+
         $this->icons = Icon::all()->keyBy(Icon::PATH);
 
         $this->createMissingIcons();

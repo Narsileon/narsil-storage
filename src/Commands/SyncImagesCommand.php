@@ -26,7 +26,7 @@ final class SyncImagesCommand extends Command
      */
     public function __construct()
     {
-        $this->signature = 'narsil:sync-images';
+        $this->signature = 'narsil:sync-images {--fresh}';
         $this->description = 'Syncs the images table with the storage folder';
 
         parent::__construct();
@@ -51,6 +51,11 @@ final class SyncImagesCommand extends Command
      */
     public function handle()
     {
+        if ($this->option('fresh'))
+        {
+            Image::query()->delete();
+        }
+
         $this->images = Image::all()->keyBy(Image::PATH);
 
         $this->createMissingImages();

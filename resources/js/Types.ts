@@ -1,4 +1,4 @@
-type IconModel = {
+export type IconModel = {
 	active: boolean;
 	created_at: string;
 	id: number;
@@ -6,7 +6,7 @@ type IconModel = {
 	updated_at: string;
 };
 
-type ImageModel = {
+export type ImageModel = {
 	active: boolean;
 	created_at: string;
 	id: number;

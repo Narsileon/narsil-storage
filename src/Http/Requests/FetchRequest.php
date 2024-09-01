@@ -4,7 +4,7 @@ namespace Narsil\Storage\Http\Requests;
 
 #region USE
 
-use Illuminate\Foundation\Http\FormRequest;
+use Narsil\Forms\Http\Requests\AbstractFormRequest;
 
 #endregion
 
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
  *
  * @author Jonathan Rigaux
  */
-final class FetchRequest extends FormRequest
+final class FetchRequest extends AbstractFormRequest
 {
     #region CONSTANTS
 
@@ -30,8 +30,8 @@ final class FetchRequest extends FormRequest
     {
         return [
             self::SEARCH => [
-                'required',
-                'string',
+                self::REQUIRED,
+                self::TYPE_STRING,
             ],
         ];
     }

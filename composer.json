@@ -15,9 +15,44 @@
 			"name": "Jonathan Rigaux"
 		}
 	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-forms.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-localization.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-menus.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-policies.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-settings.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-tables.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-tree.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-ui.git"
+		}
+	],
 	"require": {
 		"php": "^8.2",
-		"laravel/framework": "^11.3"
+		"laravel/framework": "^11.3",
+		"narsil/forms": "dev-main"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^11.0"

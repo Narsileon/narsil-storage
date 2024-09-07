@@ -6,6 +6,7 @@ namespace Narsil\Storage\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Narsil\Tables\Constants\Types;
 
 #endregion
 
@@ -34,7 +35,7 @@ class Icon extends Model
         ];
 
         $this->casts = [
-            self::ACTIVE => 'boolean',
+            self::ACTIVE => Types::BOOLEAN,
         ];
 
         $this->fillable = [

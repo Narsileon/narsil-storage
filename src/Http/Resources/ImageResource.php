@@ -27,6 +27,7 @@ class ImageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            Image::ALT => $this->{Image::ALT},
             Image::ID => $this->{Image::ID},
             Image::PATH => $this->{Image::PATH},
 

@@ -6,6 +6,8 @@ namespace Narsil\Storage\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Narsil\Localization\Casts\TransAttribute;
+use Narsil\Tables\Constants\Types;
 
 #endregion
 
@@ -34,7 +36,8 @@ class Image extends Model
         ];
 
         $this->casts = [
-            self::ACTIVE => 'boolean',
+            self::ACTIVE => Types::BOOLEAN,
+            self::ALT => TransAttribute::class,
         ];
 
         $this->fillable = [
@@ -53,6 +56,10 @@ class Image extends Model
      * @var string
      */
     final public const ACTIVE = 'active';
+    /**
+     * @var string
+     */
+    final public const ALT = 'alt';
     /**
      * @var string
      */

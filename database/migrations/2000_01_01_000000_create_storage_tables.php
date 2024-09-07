@@ -52,10 +52,15 @@ return new class extends Migration
 
         Schema::create(Icon::TABLE, function (Blueprint $table)
         {
-            $table->id();
-            $table->boolean(Image::ACTIVE)->default(true);
-            $table->string(Icon::PATH);
-            $table->timestamps();
+            $table
+                ->id(Icon::ID);
+            $table
+                ->boolean(Icon::ACTIVE)
+                ->default(true);
+            $table
+                ->string(Icon::PATH);
+            $table
+                ->timestamps();
         });
     }
 
@@ -71,10 +76,17 @@ return new class extends Migration
 
         Schema::create(Image::TABLE, function (Blueprint $table)
         {
-            $table->id();
-            $table->boolean(Image::ACTIVE)->default(true);
-            $table->string(Image::PATH);
-            $table->timestamps();
+            $table
+                ->id(Image::ID);
+            $table
+                ->boolean(Image::ACTIVE)
+                ->default(true);
+            $table
+                ->string(Image::PATH);
+            $table
+                ->trans(Image::ALT);
+            $table
+                ->timestamps();
         });
     }
 
